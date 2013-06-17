@@ -3,94 +3,49 @@ require 'sinatra'
 require 'slim'
 require "instagram"
 require "twitter"
+load 'public/lib/CInstagram.rb'
+load 'public/lib/CTwitter.rb'
+load 'public/lib/listaInstagram.rb'
+load 'public/lib/listaTwitter.rb'
+load 'public/lib/nodoTw.rb'
+load 'public/lib/nodoIn.rb'
 
-# Clase CInstagram
-# Atributo: resultado -> atributo de solo lectura, posee los resultados de realizar las consultas en Instagram
-# Paquetes requeridos: rubygems & instagram
-# CONSTRUCTOR:
-#	- palabra:texto
-#	- cantidad:entero,opcional
-# METODOS:
-#	- imprimirResultado() : Imprime el texto con el resultado de las busquedas en instagram
-#	- obtenerResultado() : Retorna el texto con el resultado de las busquedas en instagram
-# ---------------------------------------------------------------------------------------
-
-class CInstagram
-	attr_reader :resultado
-	def initialize(palabra,cantidad=15)
-		Instagram.configure do |config|
-		  config.client_id = "410015208"
-		  config.access_token = "410015208.5b9e1e6.809706cd64d54c0799ff38ba225a7d8d"
-		end
-		# Instagram.tag_recent_media
-		#	- palabra: hastack
-		#	- count: Cantidad de fotos
-		# Para mas informacion visitar: http://rubydoc.info/github/Instagram/instagram-ruby-gem/index
-		######################################################################
-		@resultado = Instagram.tag_recent_media(palabra,options={:count=>cantidad})
-	end
-	
-	public
-	def imprimirResultado
-		puts @resultado
-	end
-	
-	def obtenerResultado
-		return @resultado
+# INICIA CLASE MAIN
+$listaTwitter=ListaTwitter.new()
+$listaInstagram=ListaInstagram.new()
+def analizarTextoTwitter(lista)
+	largo=lista.count
+	contador=0
+	while contador<largo do
+		listaTweet=lista[contador].split("--tweetSeparator--")
+		$listaTwitter.insertar(listaTweet[1],listaTweet[3],listaTweet[2],listaTweet[0])
+		contador+=1
 	end
 end
 
-# Clase CTwitter
-# Atributo: resultado -> atributo de solo lectura, posee los resultados de realizar las consultas en Twitter
-# de realizar las consultas en Twitter
-# Paquetes requeridos: rubygems & twitter
-# CONSTRUCTOR:
-#	- palabra:texto
-#	- cantidad:entero,opcional
-# METODOS:
-#	- imprimirResultado() : Imprime el texto con el resultado de las busquedas en twitter
-#	- obtenerResultado() : Retorna el texto con el resultado de las busquedas en twitter
-# ---------------------------------------------------------------------------------------
-class CTwitter
-	attr_reader :resultado
-	def initialize(palabra,cantidad=15)
-		Twitter.configure do |config|
-		  config.consumer_key = "wMT3UONrMDrjddhZDK4qw"
-		  config.consumer_secret = "tiz9MRNRjg2agJcTqhLFItTGfuAyjbzPuXF2FoBaTI"
-		  config.oauth_token = "473447215-xv3DRZb8BxtFJ2MeWshP5pay0JlkYZrOs3uMKTjA"
-		  config.oauth_token_secret = "gO1pRSj1EDf1GegMoxQ2Bat47P8mmTyq7kn7L02k0zE"
-		end
-		# Twitter.search
-		#	- palabra: hastack
-		#	- count: Cantidad de twitts
-		#	- result_type: puede ser recent, popular o mixed
-		# Para mas informacion visitar: http://rdoc.info/gems/twitter/index
-		######################################################################
-		@resultado = Twitter.search(palabra, :count => cantidad, :result_type => "recent").results.map do |status|
-			"#{status.created_at}--tweetSeparator--#{status.from_user}--tweetSeparator--#{status.full_text}--tweetSeparator--#{status.user.profile_image_url(size=:bigger)}--tweetEnd--"
-		end
-	end
-	
-	public
-	def imprimirResultado
-		puts @resultado
-	end
-	
-	def obtenerResultado
-		return @resultado
-	end
-end
-
-
-# CLASE MAIN
 
 get '/' do
 	if params[:search].nil?
 		slim :index
 	else
-		twt = CTwitter.new(params[:search])
-		ins = CInstagram.new(params[:search])
-		twt.obtenerResultado
+		@resultadoTw=""
+		@resultadoIn=""
+		puts "RESULTADO: "+@resultadoTw
+		if not params[:twitter].nil?
+			if params[:count].nil?
+				twt = CTwitter.new(params[:twitter])
+			else
+				twt = CTwitter.new(params[:twitter],params[:count])
+			end
+			twResultados = twt.obtenerResultado
+			analizarTextoTwitter(twResultados)
+			@resultadoTw = "<div class='tw-div'>"+$listaTwitter.obtenerHtml+"</div>"
+		end
+		if not params[:instagram].nil?
+			ins = CInstagram.new(params[:instagram])
+			#QUEDA PENDIENTE
+		end
+		slim :busqueda
 	end
 end
 __END__
@@ -109,16 +64,32 @@ html
   body
     == yield
 @@index
+div.capaProtectora
 div.encabezado
 	h1 Twitter & Instagram search
 div.contenido
 	div.searchBox
 		div.send
-			input.search type="text"
+			input.search type="text" title="Solamente letras sin caracteres especiales"
 			div.go
 				img src="images/go.png" width="48px" height="48px"
 		div.center
 			img.twitter-logo src="images/twitter.png" width="72px" height="72px" alt="Twitter" title="Twitter"
 			img.instagram-logo src="images/instagram.png" width="72px" height="72px" alt="Instagram" title="Instagram"
-div.pie
-
+div.about
+	h1 Sobre este trabajo...
+	hr
+	p Este trabajo ha sido desarrollado para el curso de lenguajes de programación del Tecnológico de Costa Rica, impartido por el profesor Andrei Fuentes Leiva el primer semestre de 2013.
+	p El contenido de la aplicación corresponde a:
+	ul
+		li Víctor Vargas Ramírez
+		li Jose Pablo Matamoros Moya
+	p Para más información:
+	ul
+		li vargasvr94@gmail.com
+		li josepablomatamoros@gmail.com
+@@busqueda
+div.encabezado
+	h1 Twitter & Instagram search
+div.contenido
+		= @resultadoTw

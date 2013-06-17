@@ -3,6 +3,28 @@ body,html {
 	background: #CCC;
 	padding: 0;
 	margin: 0;
+	width: 99.4%;
+}
+
+
+/* Para el div de ayuda de usuario */
+.ui-tooltip {
+	color: blue;
+	width: 300px;
+	border-radius: 5px;
+	padding:5px;
+}
+
+/* CUANDO SE ESTE CARGANDO EL SITIO Y SE NECESITEN BLOQUEAR FUNCIONALIDADES */
+
+.capaProtectora {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #696969;
+	opacity:0.2;
 }
 
 /* ENCABEZADO DEL SITIO */
@@ -19,10 +41,10 @@ body,html {
 	text-shadow: 3px 3px 3px #696969;
     filter: dropshadow(color=#696969, offx=3, offy=3);
 }
-
-
 /* CONTENIDO DEL SITIO */
+
 .contenido {
+	padding: 10px;
 	width: 95%;
 	height: 0;
 	background: #FFF;
@@ -34,22 +56,61 @@ body,html {
 	transition: all 1s ease-in-out;
 	border-radius: 20px;
 }
+.tw-div {
+	background: #FAFAFA;
+	border-radius: 15px;
+	width: 45%;
+	height: auto;
+	margin: 10px;
+	padding: 10px;
+    display: table;
+}
+.tw-div .tweet:last-child {
+	border-bottom: none;
+}
+.tweet {
+	width: 100%;
+	float: left;
+	border-bottom: 2px dashed #999;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.tweet-img{
+	float: left;
+}
+.tweet-content{
+	float:left;
+}
+.tweet-content h1{
+	margin: 0 0 5px 15px;
+	color: #FFBF00;
+}
+.tweet-content p{
+	margin-left: 25px;
+}
+.tweet span.hora {
+	color: #696969;
+	font-size: 12px;
+	float: right;
+	clear: both;
+}
 .searchBox {
 	margin: 10% auto 0 auto;
 	border: 3px #666 dashed;
 	padding: 40px;
 	border-radius: 15px;
 	background: transparent;
-	width: 300px;
+	min-width: 300px;
 	height: auto;
 	width: 25%;
+	position: relative;
 }
 .center {
 	margin: 0 auto 0 auto;
-	width: 200px;
+	width: 220px;
 }
 .searchBox img {
-	margin: 20px 5px 5px 5px;
+	margin: 50px 5px 5px 5px;
 }
 .search {
 	width: 80%;
@@ -64,6 +125,42 @@ body,html {
 }
 .go {
 	position: absolute;
-	top: -25px;
+	top: -50px;
 	right: 0px;
+}
+
+/* ACERCA DE */
+
+.about {
+	color: #FFF;
+	position: fixed !important;
+	bottom: 0px;
+	left: 20px;
+	height: 35px;
+	height: 35px;
+	width: 300px;
+	background: #333;
+	border-radius: 15px 15px 0 0;
+	padding: 5px;
+	overflow: hidden;
+	text-align: justify;
+	text-justify: newspaper;
+
+}
+
+.about:hover {
+	height: 390px;
+	-webkit-transition: all 0.5s linear;
+	-moz-transition: all 0.5s linear;
+	-ms-transition: all 0.5s linear;
+	-o-transition: all 0.5s linear;
+	transition: all 0.5s linear;
+}
+
+.about h1 {
+	font-weight: bold;
+	margin: 0px;
+	color: #F7F8E0;
+	font-family: Helvetica, sans-serif;
+	font-size: 25px;
 }

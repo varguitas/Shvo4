@@ -14,7 +14,7 @@ require 'twitter'
 # ---------------------------------------------------------------------------------------
 class CTwitter
 	attr_reader :resultado
-	def initialize(palabra,cantidad=15)
+	def initialize(palabra,cantidad=2)
 		Twitter.configure do |config|
 		  config.consumer_key = "wMT3UONrMDrjddhZDK4qw"
 		  config.consumer_secret = "tiz9MRNRjg2agJcTqhLFItTGfuAyjbzPuXF2FoBaTI"
@@ -27,7 +27,8 @@ class CTwitter
 		#	- result_type: puede ser recent, popular o mixed
 		# Para mas informacion visitar: http://rdoc.info/gems/twitter/index
 		######################################################################
-		@resultado = Twitter.search(palabra, :count => cantidad, :result_type => "recent").results.map do |status|
+		puts "Buscando: "+palabra+" #Resultados: "+cantidad.to_s
+		@resultado = Twitter.search(palabra, :count => cantidad, :result_type => "recent", :lang => "es").results.map do |status|
 			"#{status.created_at}--tweetSeparator--#{status.from_user}--tweetSeparator--#{status.full_text}--tweetSeparator--#{status.user.profile_image_url(size=:bigger)}"
 		end
 	end
@@ -41,5 +42,3 @@ class CTwitter
 		return @resultado
 	end
 end
-tw = CTwitter.new("messi",2)
-tw.imprimirResultado

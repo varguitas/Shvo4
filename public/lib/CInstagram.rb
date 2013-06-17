@@ -36,5 +36,3 @@ class CInstagram
 		return @resultado
 	end
 end
-caca = CInstagram.new("perros",1)
-caca.imprimirResultado
