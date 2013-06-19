@@ -11,30 +11,30 @@
 #	- obtenerHtml() : Devuelve html correspondiente a todos los nodos
 # ---------------------------------------------------------------------------------------
 class ListaTwitter
-	$primerNodo=nil
-	$ultimoNodo=nil
+	@primerNodo=nil
+	@ultimoNodo=nil
 	def initialize()
-		$primerNodo=nil
-		$ultimoNodo=nil
+		@primerNodo=nil
+		@ultimoNodo=nil
 	end
 	public
 	def insertar(autorN,autorI,mensaje,hora)
-		temporal=NodoTwitter.new(nil,$ultimoNodo,autorN,autorI,mensaje,hora)
-		if $primerNodo.nil?
-			$primerNodo=temporal
-			$ultimoNodo=temporal
+		temporal=NodoTwitter.new(nil,@ultimoNodo,autorN,autorI,mensaje,hora)
+		if @primerNodo.nil?
+			@primerNodo=temporal
+			@ultimoNodo=temporal
 		else
-			$ultimoNodo.sigNodoCambiar(temporal)
-			$ultimoNodo=temporal
+			@ultimoNodo.sigNodoCambiar(temporal)
+			@ultimoNodo=temporal
 		end
 	end
 	def obtenerHtml
-		auxiliar=$primerNodo
-		resultado=""
+		auxiliar=@primerNodo
+		resultadoHtmlTwitter=""
 		while !auxiliar.nil?
-			resultado=resultado+auxiliar.obtenerHtml
+			resultadoHtmlTwitter=resultadoHtmlTwitter+auxiliar.obtenerHtml
 			auxiliar=auxiliar.obtenerSiguiente
 		end
-		return resultado
+		return resultadoHtmlTwitter
 	end
 end

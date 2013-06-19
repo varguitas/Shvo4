@@ -3,6 +3,7 @@ require 'sinatra'
 require 'slim'
 require "instagram"
 require "twitter"
+require 'date'
 load 'public/lib/CInstagram.rb'
 load 'public/lib/CTwitter.rb'
 load 'public/lib/listaInstagram.rb'
@@ -11,26 +12,32 @@ load 'public/lib/nodoTw.rb'
 load 'public/lib/nodoIn.rb'
 
 # INICIA CLASE MAIN
-$listaTwitter=ListaTwitter.new()
-$listaInstagram=ListaInstagram.new()
-def analizarTextoTwitter(lista)
-	largo=lista.count
+def analizarTextoTwitter(listaTw)
+	largo=listaTw.count
 	contador=0
 	while contador<largo do
-		listaTweet=lista[contador].split("--tweetSeparator--")
+		listaTweet=listaTw[contador].split("--tweetSeparator--")
 		$listaTwitter.insertar(listaTweet[1],listaTweet[3],listaTweet[2],listaTweet[0])
 		contador+=1
 	end
 end
-
-
+def analizarTextoInstagram(listaIn)
+	largo=listaIn.count
+	contador=0
+	while contador<largo do
+		post=listaIn[contador]
+		$listaInstagram.insertar(post.caption.from.full_name,post.caption.from.profile_picture,post.caption.from.text,post.images.standard_resolution.url,post.images.thumbnail.url,post.link,post.created_time)
+		contador+=1
+	end
+end
 get '/' do
 	if params[:search].nil?
 		slim :index
 	else
+		$listaTwitter=ListaTwitter.new()
+		$listaInstagram=ListaInstagram.new()
 		@resultadoTw=""
 		@resultadoIn=""
-		puts "RESULTADO: "+@resultadoTw
 		if not params[:twitter].nil?
 			if params[:count].nil?
 				twt = CTwitter.new(params[:twitter])
@@ -39,12 +46,24 @@ get '/' do
 			end
 			twResultados = twt.obtenerResultado
 			analizarTextoTwitter(twResultados)
-			@resultadoTw = "<div class='tw-div'>"+$listaTwitter.obtenerHtml+"</div>"
+			@resultadoTw = "<div class='tw-div'><div class='logo-twitter-res'><img src='/images/twitter-imagen-logo.gif' width='140px' height='140px'></div>"+$listaTwitter.obtenerHtml+"</div>"
 		end
 		if not params[:instagram].nil?
-			ins = CInstagram.new(params[:instagram])
-			#QUEDA PENDIENTE
+			if params[:count].nil?
+				ins = CInstagram.new(params[:instagram])
+			else
+				ins = CInstagram.new(params[:instagram],params[:count])
+			end
+			insResultados = ins.obtenerResultado
+			#puts "-------------------------------------------------------------------------------\n"
+			analizarTextoInstagram(insResultados)
+			@resultadoIn = "<div class='in-div'><div class='logo-twitter-res logo-insta-res'><img src='/images/instagram.png' width='90px' height='90px'></div>"+$listaInstagram.obtenerHtml+"</div>"
 		end
+		@resultadoFinal = @resultadoTw + @resultadoIn
+		$listaInstagram=nil
+		$listaTwitter=nil
+		@resultadoTw=""
+		@resultadoIn=""
 		slim :busqueda
 	end
 end
@@ -71,6 +90,7 @@ div.contenido
 	div.searchBox
 		div.send
 			input.search type="text" title="Solamente letras sin caracteres especiales"
+			input.count type="text" title="Solamente números enteros positivos menores a 60"
 			div.go
 				img src="images/go.png" width="48px" height="48px"
 		div.center
@@ -92,4 +112,4 @@ div.about
 div.encabezado
 	h1 Twitter & Instagram search
 div.contenido
-		= @resultadoTw
+		= @resultadoFinal

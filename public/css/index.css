@@ -23,8 +23,28 @@ body,html {
 	position: absolute;
 	top: 0;
 	left: 0;
+	background: #696969;/* Codigo base para el html & body */
+}
+
+
+/* Para el div de ayuda de usuario */
+.ui-tooltip {
+	color: blue;
+	width: 300px;
+	border-radius: 5px;
+	padding:5px;
+}
+
+/* CUANDO SE ESTE CARGANDO EL SITIO Y SE NECESITEN BLOQUEAR FUNCIONALIDADES */
+
+.capaProtectora {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 	background: #696969;
-	opacity:0.2;
+	opacity:0.9;
 }
 
 /* ENCABEZADO DEL SITIO */
@@ -46,8 +66,9 @@ body,html {
 .contenido {
 	padding: 10px;
 	width: 95%;
+	min-width: 700px;
 	height: 0;
-	background: #FFF;
+	background: #CCC;
 	margin: 0 auto 0 auto;
 	-webkit-transition: all 1s ease-in-out;
 	-moz-transition: all 1s ease-in-out;
@@ -64,6 +85,7 @@ body,html {
 	margin: 10px;
 	padding: 10px;
     display: table;
+    float: left;
 }
 .tw-div .tweet:last-child {
 	border-bottom: none;
@@ -75,15 +97,223 @@ body,html {
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
+.tweet:hover {
+	background: #333;
+	color: #FFF;
+}
 .tweet-img{
 	float: left;
 }
 .tweet-content{
 	float:left;
+	width: 85%;
 }
 .tweet-content h1{
 	margin: 0 0 5px 15px;
 	color: #FFBF00;
+	display: inline;
+}
+.tweet-content p{
+	margin-left: 25px;
+}
+.tweet span.hora {
+	color: #696969;
+	font-size: 12px;
+	float: right;
+	clear: both;
+	margin-right: 10px;
+}
+.searchBox {
+	margin: 10% auto 0 auto;
+	border: 3px #666 dashed;
+	padding: 40px;
+	border-radius: 15px;
+	background: transparent;
+	min-width: 300px;
+	height: auto;
+	width: 25%;
+	position: relative;
+}
+.center {
+	margin: 0 auto 0 auto;
+	width: 220px;
+}
+.searchBox img {
+	margin: 50px 5px 5px 5px;
+}
+.search {
+	width: 60%;
+	border-radius: 15px;
+	background: #FAFAFA;
+	height: 40px;
+	color: #666;
+	font-size: 26px;
+}
+.count {
+	width: 50px;
+	height: 40px;
+	border-radius: 15px;
+	font-weight: bold;
+	color: #666;
+	font-size: 26px;
+	margin-left: 4px;
+	padding-right: 3px;
+	opacity: 0.4;
+}
+.send {
+	position: relative;
+}
+.go {
+	position: absolute;
+	top: -50px;
+	right: 0px;
+}
+/* INSTAGRAM */
+.in-div {
+	background: #FAFAFA;
+	border-radius: 15px;
+	width: 45%;
+	height: auto;
+	margin: 10px;
+	padding: 10px;
+    display: table;
+    float: left;
+}
+.in-div .description {
+	float: left;
+}
+.instaPost {
+	width: 100%;
+	float: left;
+	height: 130px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 1px #696969 solid;
+	border-radius: 5px;
+	margin-bottom: 8px;
+}
+.postDetails {
+	width: 65%;
+	border-right: 2px dashed #999;
+	border-radius: 5px 0 0 5px;
+	float: left;
+	padding: 0;
+	height: 100%;
+	margin-top: -5px;
+}
+.postThumb {
+	height: 100%;
+	margin: 5px;
+	width: 140px;
+}
+.usrProfilePhoto {
+	float: left;
+}
+.usrProfile {
+	background: #696969;
+	padding: 7px;
+	border-radius: 5px 0 0 0;
+}
+.usrProfile h1 {
+	margin: 0 0 5px 15px;
+	color: #FFBF00;
+	display: inline;
+}
+.postImages {
+	width: 30%;
+	float: left;
+}
+.thumb-image-insta
+	opacity:0.9;
+}
+
+/* ENCABEZADO DEL SITIO */
+.encabezado {
+	height: 75px;
+	width: 100%;
+	background: #2E9AFE;
+	padding: 25px 5px 5px 15px;
+}
+.encabezado h1 {
+	margin: 0px;
+	color: #FFF;
+	font-size: 46px;
+	text-shadow: 3px 3px 3px #696969;
+    filter: dropshadow(color=#696969, offx=3, offy=3);
+}
+/* CONTENIDO DEL SITIO */
+
+.contenido {
+	padding: 10px;
+	width: 95%;
+	min-width: 700px;
+	height: 0;
+	background: #CCC;
+	margin: 0 auto 0 auto;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+	border-radius: 20px;
+}
+.tw-div {
+	background: #FAFAFA;
+	border-radius: 15px;
+	width: 45%;
+	height: auto;
+	margin: 10px;
+	padding: 10px;
+    display: table;
+    float: left;
+}
+.tw-div .tweet:last-child {
+	border-bottom: none;
+}
+.twetter-text {
+	font-size: 28px;
+	color: gold;
+	font-weight: bold;
+}
+.logo-twitter-res {
+	text-align: center;
+	background: #696969;
+	height: 150px;
+	margin: -10px;
+	margin-bottom: 20px;
+	border-radius: 15px 15px 0 0 ;
+}
+.logo-insta-res {
+	height: 115px;
+	padding-top: 35px;
+}
+.tweet {
+	width: 100%;
+	float: left;
+	border-bottom: 2px dashed #999;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.tweet:hover {
+	background: #333;
+	color: #FFF;
+}
+.tweet-img{
+	margin-left: 3px;
+	float: left;
+}
+.tweet-img img{
+	border-radius: 3px;
+	border: 2px #CCC solid;
+}
+.tweet-content{
+	float:left;
+	width: 85%;
+}
+.tweet-content h1{
+	margin: 0 0 5px 15px;
+	color: #FFBF00;
+	display: inline;
 }
 .tweet-content p{
 	margin-left: 25px;
@@ -113,12 +343,23 @@ body,html {
 	margin: 50px 5px 5px 5px;
 }
 .search {
-	width: 80%;
+	width: 60%;
 	border-radius: 15px;
 	background: #FAFAFA;
 	height: 40px;
 	color: #666;
 	font-size: 26px;
+}
+.count {
+	width: 50px;
+	height: 40px;
+	border-radius: 15px;
+	font-weight: bold;
+	color: #666;
+	font-size: 26px;
+	margin-left: 4px;
+	padding-right: 3px;
+	opacity: 0.4;
 }
 .send {
 	position: relative;
@@ -127,6 +368,103 @@ body,html {
 	position: absolute;
 	top: -50px;
 	right: 0px;
+}
+/* INSTAGRAM */
+.in-div {
+	background: #FAFAFA;
+	border-radius: 15px;
+	width: 45%;
+	height: auto;
+	margin: 10px;
+	padding: 10px;
+    display: table;
+    float: left;
+}
+.in-div .description {
+	float: left;
+}
+.instaPost {
+	width: 100%;
+	min-width: 500px;
+	float: left;
+	height: 130px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border: 1px #696969 solid;
+	border-radius: 5px;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+.instaPost:hover {
+	background: #CCC;
+}
+.postDetails {
+	width: calc(100% - 160px);
+	border-right: 2px dashed #999;
+	border-radius: 5px 0 0 5px;
+	float: left;
+	padding: 0;
+	height: 100%;
+	margin-top: -5px;
+}
+.postThumb {
+	height: 100%;
+	margin: 5px;
+}
+.usrProfilePhoto {
+	float: left;
+}
+.usrProfile {
+	background: #696969;
+	padding: 7px;
+	border-radius: 5px 0 0 0;
+}
+.usrProfile h1 {
+	margin: 0 0 5px 15px;
+	color: #FFBF00;
+	display: inline;
+}
+.postImages {
+	float: left;
+	width: 140px;
+}
+.usrProfilePhoto img {
+	border-radius: 3px;
+	border: 2px #CCC solid;
+}
+
+.extendido {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+.extendido-img {
+	width: 700px;
+	margin: 150px auto 0 auto;
+	z-index: 20;
+	padding: 30px;
+	background: #FFF;
+	border-top: 3px solid #CCC;
+	border-left: 3px solid #CCC;
+	border-bottom: 3px solid #666;
+	border-right: 3px solid #666;
+	border-radius: 15px;
+	cursor: default;
+}
+
+.link {
+	float: left;
+	width: 40px;
+	height: 100%;
+	margin-right: 10px;
+}
+
+.link img {
+	margin-top: 10px;
 }
 
 /* ACERCA DE */

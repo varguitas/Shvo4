@@ -24,14 +24,18 @@ class CInstagram
 		#	- count: Cantidad de fotos
 		# Para mas informacion visitar: http://rubydoc.info/github/Instagram/instagram-ruby-gem/index
 		######################################################################
-		@resultado = Instagram.tag_recent_media(palabra,options={:count=>cantidad})
+		ccantidad=10000
+		@resultado = Instagram.tag_recent_media(palabra,options={:count=>ccantidad})
+		if @resultado.count > cantidad.to_i then
+			@resultado=@resultado[0,(cantidad.to_i)-1]
+		end
 	end
-	
+
 	public
 	def imprimirResultado
 		puts @resultado
 	end
-	
+
 	def obtenerResultado
 		return @resultado
 	end

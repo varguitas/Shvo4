@@ -10,23 +10,29 @@
 #	- obtenerHtml() : Devuelve html correspondiente a todos los nodos
 # ---------------------------------------------------------------------------------------
 class ListaInstagram
-	attr_writer :primerNodo,:ultimoNodo
-	def insertar(autorN,imagen,hora)
-		temporal=nodoInstagram.new(nil,@ultimoNodo,autorN,imagen,hora)
+	@primerNodo=nil
+	@ultimoNodo=nil
+	def initialize
+		@primerNodo=nil
+		@ultimoNodo=nil
+	end
+	public
+	def insertar(autorN,perImg,com,standard,thumb,link,hora)
+		temporal=NodoInstagram.new(nil,@ultimoNodo,autorN,perImg,com,standard,thumb,link,hora)
 		if @primerNodo.nil?
 			@primerNodo=@ultimoNodo=temporal
 		else
-			@ultimoNodo.sigNodo=temporal
+			@ultimoNodo.sigNodoCambiar(temporal)
 			@ultimoNodo=temporal
 		end
 	end
 	def obtenerHtml
 		auxiliar=@primerNodo
-		resultado=""
+		resultadoHtmlInstagram=""
 		while not auxiliar.nil?
-			resultado=resultado+auxiliar.obtenerHtml
-			auxiliar=auxiliar.sigNodo
+			resultadoHtmlInstagram=resultadoHtmlInstagram+auxiliar.obtenerHtml
+			auxiliar=auxiliar.obtenerSiguiente
 		end
-		return resultado
+		return resultadoHtmlInstagram
 	end
 end
